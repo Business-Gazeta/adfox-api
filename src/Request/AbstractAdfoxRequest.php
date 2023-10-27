@@ -8,8 +8,6 @@ use BusinessGazeta\AdfoxApi\Enum\ObjectEnum;
 
 abstract class AbstractAdfoxRequest implements AdfoxRequestInterface
 {
-    public const OBJECT = ObjectEnum::ACCOUNT;
-    public const ACTION = ActionEnum::LIST;
 
     private int $limit = 100;
     private int $offset = 0;
@@ -58,14 +56,24 @@ abstract class AbstractAdfoxRequest implements AdfoxRequestInterface
     public function params(): array
     {
         $class = explode('\\', get_class($this));
-        $name = array_pop($class);
+        $action_object = array_pop($class);
+        $action = array_pop($class);
+        $object = array_pop($class);
         return [
-            'object' => $this::OBJECT->value,
-            'action' => $this::ACTION->value,
-            'actionObject' => lcfirst($name),
+            'object' => $object,
+            'action' => $action,
+            'actionObject' => lcfirst($action_object),
             'encoding' => 'UTF-8',
             'limit' => $this->getLimit(),
             'offset' => $this->getOffset()
         ];
+    }
+
+    public function mergeParams(array $params, $param, string $name): array
+    {
+        if (!is_null($param['value'])) {
+            return array_merge($params, [$param['name'] => $param['value']]);
+        }
+        return $param;
     }
 }
