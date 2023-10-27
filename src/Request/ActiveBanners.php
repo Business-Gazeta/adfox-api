@@ -30,12 +30,14 @@ class ActiveBanners extends AbstractAdfoxRequest
     public function params(): array
     {
         $params = parent::params();
-        return array_merge(
-            $params,
-            [
-                'date' => $this->date->format(DateInterface::DATE_FORMAT)
-            ]
-        );
+        return [
+            'query' => array_merge(
+                $params,
+                [
+                    'date' => $this->date->format(DateInterface::DATE_FORMAT)
+                ]
+            )
+        ];
     }
 
 
