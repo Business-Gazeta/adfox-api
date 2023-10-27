@@ -1,0 +1,20 @@
+{
+    "name": "business-gazeta/adfox-api",
+    "description": "PHP библиотека для работы с API AdFox",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "BusinessGazeta\\AdfoxApi\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Salavat Sitdikov",
+            "email": "sitsalavat@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": ">=7.8.0"
+    }
+}
