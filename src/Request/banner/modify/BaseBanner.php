@@ -4,6 +4,8 @@ namespace BusinessGazeta\AdfoxApi\Request\banner\modify;
 
 use BusinessGazeta\AdfoxApi\Helper\DateInterface;
 use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
+use BusinessGazeta\AdfoxApi\Request\banner\modify\Objects\BannerMediaData;
+use DateTime;
 
 /**
  * @link https://yandex.ru/dev/adfox/doc/v.1/account/account-list-activeBanners.html
@@ -11,43 +13,46 @@ use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
 class BaseBanner extends AbstractAdfoxRequest
 {
     private int $objectID;
-    private string $name;
-    private int $targetingProfileID;
-    private \DateTime $dateStart;
-    private \DateTime $dateEnd;
-    private int $priority;
-    private int $status;
-    private int $isEvents;
-    private  int $isUnplaced;
-    private string $backgroundColor;
-    private string $width;
-    private string $height;
-    private string $imageURL;
-    private string $hitURL;
-    private string $target;
-    private string $alt;
-    private string $userN;
-    private string $eventN;
-    private string $hitURLN;
-    private int $maxImpressions;
-    private int $maxImpressionsPerDay;
-    private int $maxImpressionsPerHour;
-    private int $maxClicks;
-    private int $maxClicksPerDay;
-    private int $maxClicksPerHour;
-    private string $trackingURL;
-    private int $showMenu;
-    private int $adLabel;
-    private string $domain;
-    private int $sendToErir;
-    private string $token;
-    private int $creativeContentType;
-    private string $okveds;
-    private string $markingDescription;
-    private string $targetURL;
-    private  string $textData;
-//    private int $ & [mediaData[]=<{"url": "URL медиаданных", "description": "string"}>]
-//    private int $sendToErir;
+    private ?string $name = null;
+    private ?int $targetingProfileID = null;
+    private ?DateTime $dateStart = null;
+    private ?DateTime $dateEnd = null;
+    private ?int $priority = null;
+    private ?int $status = null;
+    private ?int $isEvents = null;
+    private ?int $isUnplaced = null;
+    private ?string $backgroundColor = null;
+    private ?string $width = null;
+    private ?string $height = null;
+    private ?string $imageURL = null;
+    private ?string $hitURL = null;
+    private ?string $target = null;
+    private ?string $alt = null;
+    private ?string $userN = null;
+    private ?string $eventN = null;
+    private ?string $hitURLN = null;
+    private ?int $maxImpressions = null;
+    private ?int $maxImpressionsPerDay = null;
+    private ?int $maxImpressionsPerHour = null;
+    private ?int $maxClicks = null;
+    private ?int $maxClicksPerDay = null;
+    private ?int $maxClicksPerHour = null;
+    private ?string $trackingURL = null;
+    private ?int $showMenu = null;
+    private ?int $adLabel = null;
+    private ?string $domain = null;
+    private ?int $sendToErir = null;
+    private ?string $token = null;
+    private ?int $creativeContentType = null;
+    private ?string $okveds = null;
+    private ?string $markingDescription = null;
+    private ?string $targetURL = null;
+    private  ?string $textData = null;
+    /**
+     * @var BannerMediaData[]
+     */
+    private ?array $mediaData = null;
+    private ?array $sendToErirParams = null;
 
     /**
      * @param \DateTime $date
@@ -61,10 +66,10 @@ class BaseBanner extends AbstractAdfoxRequest
     {
         $params = parent::params();
         $params = array_merge($params, ['objectID' => $this->getObjectID()]);
-        $params = $this->mergeParams($params, $this->getName(), 'name');
-        print_r($this);
-        die();
-        $params = $this->mergeParams($params, $this->getName(), 'name');
+        $params = $this->mergeParams($params, $this->name, 'name');
+
+//        print_r($this);
+//        die();
         return [
             'query' => $params
         ];
@@ -645,4 +650,38 @@ class BaseBanner extends AbstractAdfoxRequest
     {
         $this->textData = $textData;
     }
+
+    /**
+     * @return array|null
+     */
+    public function getMediaData(): ?array
+    {
+        return $this->mediaData;
+    }
+
+    /**
+     * @param array|null $mediaData
+     */
+    public function setMediaData(?array $mediaData): void
+    {
+        $this->mediaData = $mediaData;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getSendToErirParams(): ?array
+    {
+        return $this->sendToErirParams;
+    }
+
+    /**
+     * @param array|null $sendToErirParams
+     */
+    public function setSendToErirParams(?array $sendToErirParams): void
+    {
+        $this->sendToErirParams = $sendToErirParams;
+    }
+
+
 }
