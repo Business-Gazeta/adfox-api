@@ -7,8 +7,12 @@ namespace BusinessGazeta\AdfoxApi\Request\banner\modify\Objects;
 class BannerMediaData
 {
     private string $url;
-    private string $description;
+    private ?string $description = null;
 
+    public function __construct(string $url)
+    {
+        $this->url = $url;
+    }
     /**
      * @return string
      */

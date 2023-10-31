@@ -5,18 +5,24 @@ namespace BusinessGazeta\AdfoxApi\Request\banner\modify;
 use BusinessGazeta\AdfoxApi\Helper\DateInterface;
 use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
 use BusinessGazeta\AdfoxApi\Request\banner\modify\Objects\BannerMediaData;
+use BusinessGazeta\AdfoxApi\Types\BannerSendToErirTypes;
 use DateTime;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @link https://yandex.ru/dev/adfox/doc/v.1/account/account-list-activeBanners.html
  */
 class BaseBanner extends AbstractAdfoxRequest
 {
-    private int $objectID;
     private ?string $name = null;
     private ?int $targetingProfileID = null;
     private ?DateTime $dateStart = null;
     private ?DateTime $dateEnd = null;
+    #[Assert\Range(
+        notInRangeMessage: 'Допустимые значения: от 1 до 1000 включительно.',
+        min: 1,
+        max: 1000
+    )]
     private ?int $priority = null;
     private ?int $status = null;
     private ?int $isEvents = null;
@@ -28,14 +34,44 @@ class BaseBanner extends AbstractAdfoxRequest
     private ?string $hitURL = null;
     private ?string $target = null;
     private ?string $alt = null;
-    private ?string $userN = null;
-    private ?string $eventN = null;
-    private ?string $hitURLN = null;
+    private ?array $userN = null;
+    private ?array $eventN = null;
+    private ?array $hitURLN = null;
+    #[Assert\Range(
+        notInRangeMessage: 'Допустимые значения: от 1 до 2147483647.',
+        min: 1,
+        max: 2147483647
+    )]
     private ?int $maxImpressions = null;
+    #[Assert\Range(
+        notInRangeMessage: 'Допустимые значения: от 1 до 2147483647.',
+        min: 1,
+        max: 2147483647
+    )]
     private ?int $maxImpressionsPerDay = null;
+    #[Assert\Range(
+        notInRangeMessage: 'Допустимые значения: от 1 до 2147483647.',
+        min: 1,
+        max: 2147483647
+    )]
     private ?int $maxImpressionsPerHour = null;
+    #[Assert\Range(
+        notInRangeMessage: 'Допустимые значения: от 1 до 2147483647.',
+        min: 1,
+        max: 2147483647
+    )]
     private ?int $maxClicks = null;
+    #[Assert\Range(
+        notInRangeMessage: 'Допустимые значения: от 1 до 2147483647.',
+        min: 1,
+        max: 2147483647
+    )]
     private ?int $maxClicksPerDay = null;
+    #[Assert\Range(
+        notInRangeMessage: 'Допустимые значения: от 1 до 2147483647.',
+        min: 1,
+        max: 2147483647
+    )]
     private ?int $maxClicksPerHour = null;
     private ?string $trackingURL = null;
     private ?int $showMenu = null;
@@ -51,44 +87,84 @@ class BaseBanner extends AbstractAdfoxRequest
     /**
      * @var BannerMediaData[]
      */
+    #[Assert\All([
+        new Assert\Type(BannerMediaData::class)
+    ])]
     private ?array $mediaData = null;
     private ?array $sendToErirParams = null;
-
-    /**
-     * @param \DateTime $date
-     */
-    public function __construct(int $objectID)
-    {
-        $this->setObjectID($objectID);
-    }
 
     public function params(): array
     {
         $params = parent::params();
-        $params = array_merge($params, ['objectID' => $this->getObjectID()]);
         $params = $this->mergeParams($params, $this->name, 'name');
+        $params = $this->mergeParams($params, $this->targetingProfileID, 'targetingProfileID');
+        $params = $this->mergeParams($params, $this->dateStart->format(DateInterface::DATE_FORMAT), 'dateStart');
+        $params = $this->mergeParams($params, $this->dateEnd->format(DateInterface::DATE_FORMAT), 'dateEnd');
+        $params = $this->mergeParams($params, $this->priority, 'priority');
+        $params = $this->mergeParams($params, $this->status, 'status');
+        $params = $this->mergeParams($params, $this->isEvents, 'isEvents');
+        $params = $this->mergeParams($params, $this->isUnplaced, 'isUnplaced');
+        $params = $this->mergeParams($params, $this->backgroundColor, 'backgroundColor');
+        $params = $this->mergeParams($params, $this->width, 'width');
+        $params = $this->mergeParams($params, $this->height, 'height');
+        $params = $this->mergeParams($params, $this->imageURL, 'imageURL');
+        $params = $this->mergeParams($params, $this->hitURL, 'hitURL');
+        $params = $this->mergeParams($params, $this->target, 'target');
+        $params = $this->mergeParams($params, $this->alt, 'alt');
+        $users = [];
+        if (!is_null($this->userN)) {
+            foreach ($this->userN as $key => $user) {
+                $users[] = ['user' . $key => $user];
+            }
+        }
+        $params = array_merge($params, $users);
+        $events = [];
+        if (!is_null($this->eventN)) {
+            foreach ($this->eventN as $key => $event) {
+                $events[] = ['event' . $key => $event];
+            }
+        }
+        $params = array_merge($params, $events);
+        $hit_urls = [];
+        if (!is_null($this->hitURLN)) {
+            foreach ($this->hitURLN as $key => $hit_url) {
+                $hit_urls[] = ['hitURL' . $key => $hit_url];
+            }
+        }
+        $params = array_merge($params, $hit_urls);
+        $params = $this->mergeParams($params, $this->maxImpressions, 'maxImpressions');
+        $params = $this->mergeParams($params, $this->maxImpressionsPerDay, 'maxImpressionsPerDay');
+        $params = $this->mergeParams($params, $this->maxImpressionsPerHour, 'maxImpressionsPerHour');
+        $params = $this->mergeParams($params, $this->maxClicks, 'maxClicks');
+        $params = $this->mergeParams($params, $this->maxClicksPerDay, 'maxClicksPerDay');
+        $params = $this->mergeParams($params, $this->maxClicksPerHour, 'maxClicksPerHour');
+        $params = $this->mergeParams($params, $this->trackingURL, 'trackingURL');
+        $params = $this->mergeParams($params, $this->showMenu, 'showMenu');
+        $params = $this->mergeParams($params, $this->adLabel, 'adLabel');
+        $params = $this->mergeParams($params, $this->domain, 'domain');
+        $params = $this->mergeParams($params, $this->sendToErir, 'sendToErir');
+        if (!is_null($this->sendToErir) && $this->sendToErir === BannerSendToErirTypes::NOT_SEND_TO_ERIR) {
+            $params = $this->mergeParams($params, $this->token, 'token');
+        }
+        $params = $this->mergeParams($params, $this->creativeContentType, 'creativeContentType');
+        $params = $this->mergeParams($params, $this->okveds, 'okveds[]');
+        $params = $this->mergeParams($params, $this->targetURL, 'targetURL');
+        $params = $this->mergeParams($params, $this->mediaData, 'mediaData[]');
+        $send_to_erir_params = [];
+        if (!is_null($this->sendToErirParams)) {
+            foreach ($this->sendToErirParams as $key => $erir) {
+                if (is_int($key)) {
+                    $send_to_erir_params[] = ['sendToErirParameter' . $key => $erir];
+                } else {
+                    $send_to_erir_params[] = ['sendToErir' . $key => $erir];
+                }
+            }
+        }
+        $params = array_merge($params, $send_to_erir_params);
 
-//        print_r($this);
-//        die();
         return [
             'query' => $params
         ];
-    }
-
-    /**
-     * @return int
-     */
-    public function getObjectID(): int
-    {
-        return $this->objectID;
-    }
-
-    /**
-     * @param int $objectID
-     */
-    public function setObjectID(int $objectID): void
-    {
-        $this->objectID = $objectID;
     }
 
     /**
@@ -334,47 +410,47 @@ class BaseBanner extends AbstractAdfoxRequest
     /**
      * @return string
      */
-    public function getUserN(): string
+    public function getUserN(): array
     {
         return $this->userN;
     }
 
     /**
-     * @param string $userN
+     * @param array $userN
      */
-    public function setUserN(string $userN): void
+    public function setUserN(array $userN): void
     {
         $this->userN = $userN;
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getEventN(): string
+    public function getEventN(): array
     {
         return $this->eventN;
     }
 
     /**
-     * @param string $eventN
+     * @param array $eventN
      */
-    public function setEventN(string $eventN): void
+    public function setEventN(array $eventN): void
     {
         $this->eventN = $eventN;
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getHitURLN(): string
+    public function getHitURLN(): array
     {
         return $this->hitURLN;
     }
 
     /**
-     * @param string $hitURLN
+     * @param array $hitURLN
      */
-    public function setHitURLN(string $hitURLN): void
+    public function setHitURLN(array $hitURLN): void
     {
         $this->hitURLN = $hitURLN;
     }

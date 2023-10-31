@@ -71,9 +71,9 @@ abstract class AbstractAdfoxRequest implements AdfoxRequestInterface
 
     public function mergeParams(array $params, $param, string $name): array
     {
-        if (!is_null($param['value'])) {
+        if (!is_null($param)) {
             return array_merge($params, [$name => $param]);
         }
-        return $param;
+        return $params;
     }
 }
