@@ -59,14 +59,29 @@ abstract class AbstractAdfoxRequest implements AdfoxRequestInterface
         $action_object = array_pop($class);
         $action = array_pop($class);
         $object = array_pop($class);
-        return [
-            'object' => $object,
-            'action' => $action,
-            'actionObject' => lcfirst($action_object),
+        $data = [
             'encoding' => 'UTF-8',
             'limit' => $this->getLimit(),
             'offset' => $this->getOffset()
         ];
+        if ($object === 'Request') {
+            $object = $action;
+            $action = strtolower($action_object);
+        } else {
+            $data = array_merge($data, ['actionObject' => lcfirst($action_object)]);
+        }
+        return array_merge($data, [
+            'object' => $object,
+            'action' => $action,
+        ]);
+//        return [
+//            'object' => $object,
+//            'action' => $action,
+//            'actionObject' => lcfirst($action_object),
+//            'encoding' => 'UTF-8',
+//            'limit' => $this->getLimit(),
+//            'offset' => $this->getOffset()
+//        ];
     }
 
     public function mergeParams(array $params, $param, string $name): array
