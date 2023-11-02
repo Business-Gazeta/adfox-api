@@ -12,10 +12,7 @@ use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
  */
 class ActiveBanners extends AbstractAdfoxRequest
 {
-    public const OBJECT = ObjectEnum::ACCOUNT;
-    public const ACTION = ActionEnum::LIST;
-
-    private \DateTime $date;
+        private \DateTime $date;
 
     /**
      * @param \DateTime $date

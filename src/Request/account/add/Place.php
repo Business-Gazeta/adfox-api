@@ -2,13 +2,7 @@
 
 namespace BusinessGazeta\AdfoxApi\Request\account\add;
 
-use BusinessGazeta\AdfoxApi\Helper\DateInterface;
-use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
-use BusinessGazeta\AdfoxApi\Request\banner\modify\Objects\BannerMediaData;
 use BusinessGazeta\AdfoxApi\Request\place\BasePlace;
-use BusinessGazeta\AdfoxApi\Types\BannerSendToErirTypes;
-use DateTime;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @link https://yandex.ru/dev/adfox/doc/v.1/account/account-list-activeBanners.html
@@ -90,6 +84,38 @@ class Place extends BasePlace
     public function setBannerTypeID(int $bannerTypeID): void
     {
         $this->bannerTypeID = $bannerTypeID;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPositionID(): int
+    {
+        return $this->positionID;
+    }
+
+    /**
+     * @param int $positionID
+     */
+    public function setPositionID(int $positionID): void
+    {
+        $this->positionID = $positionID;
     }
 
 }

@@ -28,6 +28,11 @@ class Modify extends AbstractAdfoxRequest
     )]
     private ?string $height = null;
 
+    public function __construct(int $objectID)
+    {
+        $this->objectID = $objectID;
+    }
+
     public function params(): array
     {
         $params = parent::params();

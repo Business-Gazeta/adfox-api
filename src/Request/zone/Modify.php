@@ -1,28 +1,27 @@
 <?php
 
-namespace BusinessGazeta\AdfoxApi\Request\place;
+namespace BusinessGazeta\AdfoxApi\Request\zone;
+
 
 /**
  * @link https://yandex.ru/dev/adfox/doc/v.1/account/account-list-activeBanners.html
  */
 
-class Modify extends BasePlace
+
+class Modify extends BaseZone
 {
     private int $objectID;
     private ?string $name = null;
-    private ?int $positionID = null;
 
     public function __construct(int $objectID)
     {
         $this->objectID = $objectID;
-
     }
     public function params(): array
     {
         $params = parent::params();
         $params = array_merge($params, ['objectID' => $this->objectID]);
         $params = $this->mergeParams($params, $this->name, 'name');
-        $params = $this->mergeParams($params, $this->positionID, 'positionID');
 
         return [
             'query' => $params
@@ -59,22 +58,6 @@ class Modify extends BasePlace
     public function setName(?string $name): void
     {
         $this->name = $name;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getPositionID(): ?int
-    {
-        return $this->positionID;
-    }
-
-    /**
-     * @param int|null $positionID
-     */
-    public function setPositionID(?int $positionID): void
-    {
-        $this->positionID = $positionID;
     }
 
 }

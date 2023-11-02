@@ -66,7 +66,7 @@ abstract class AbstractAdfoxRequest implements AdfoxRequestInterface
         ];
         if ($object === 'Request') {
             $object = $action;
-            $action = strtolower($action_object);
+            $action = lcfirst($action_object);
         } else {
             $data = array_merge($data, ['actionObject' => lcfirst($action_object)]);
         }

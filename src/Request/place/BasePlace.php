@@ -2,11 +2,7 @@
 
 namespace BusinessGazeta\AdfoxApi\Request\place;
 
-use BusinessGazeta\AdfoxApi\Helper\DateInterface;
 use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
-use BusinessGazeta\AdfoxApi\Request\banner\modify\Objects\BannerMediaData;
-use BusinessGazeta\AdfoxApi\Types\BannerSendToErirTypes;
-use DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -18,9 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 )]
 class BasePlace extends AbstractAdfoxRequest
 {
-    private ?string $name = null;
     private ?int $categoryID = null;
-    private ?int $positionID = null;
     private ?int $pct = null;
     private ?int $plp = null;
     #[Assert\GreaterThan(value: 1)]
@@ -36,9 +30,7 @@ class BasePlace extends AbstractAdfoxRequest
     public function params(): array
     {
         $params = parent::params();
-        $params = $this->mergeParams($params, $this->name, 'name');
         $params = $this->mergeParams($params, $this->categoryID, 'categoryID');
-        $params = $this->mergeParams($params, $this->positionID, 'positionID');
         $params = $this->mergeParams($params, $this->pct, 'pct');
         $params = $this->mergeParams($params, $this->plp, 'plp');
         $params = $this->mergeParams($params, $this->pli, 'pli');
@@ -47,22 +39,6 @@ class BasePlace extends AbstractAdfoxRequest
         return [
             'query' => $params
         ];
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string|null $name
-     */
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
     }
 
     /**
@@ -79,22 +55,6 @@ class BasePlace extends AbstractAdfoxRequest
     public function setCategoryID(?int $categoryID): void
     {
         $this->categoryID = $categoryID;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getPositionID(): ?int
-    {
-        return $this->positionID;
-    }
-
-    /**
-     * @param int|null $positionID
-     */
-    public function setPositionID(?int $positionID): void
-    {
-        $this->positionID = $positionID;
     }
 
     /**

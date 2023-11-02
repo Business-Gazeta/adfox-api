@@ -1,6 +1,6 @@
 <?php
 
-namespace BusinessGazeta\AdfoxApi\Request\Position;
+namespace BusinessGazeta\AdfoxApi\Request\place;
 
 use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
 
@@ -9,10 +9,9 @@ use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
  */
 
 
-class Modify extends AbstractAdfoxRequest
+class ListActiveBanners extends AbstractAdfoxRequest
 {
     private int $objectID;
-    private ?string $name = null;
 
     public function __construct(int $objectID)
     {
@@ -23,7 +22,6 @@ class Modify extends AbstractAdfoxRequest
     {
         $params = parent::params();
         $params = array_merge($params, ['objectID' => $this->objectID]);
-        $params = $this->mergeParams($params, $this->name, 'name');
 
         return [
             'query' => $params
@@ -44,22 +42,6 @@ class Modify extends AbstractAdfoxRequest
     public function setObjectID(int $objectID): void
     {
         $this->objectID = $objectID;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string|null $name
-     */
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
     }
 
 }
