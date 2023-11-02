@@ -27,9 +27,7 @@ class BaseZone extends AbstractAdfoxRequest
         $params = $this->mergeParams($params, $this->template, 'template');
         $params = $this->mergeParams($params, $this->templateExcluded, 'templateExcluded');
 
-        return [
-            'query' => $params
-        ];
+        return $params;
     }
 
     /**

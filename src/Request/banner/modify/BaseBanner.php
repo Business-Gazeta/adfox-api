@@ -162,9 +162,7 @@ class BaseBanner extends AbstractAdfoxRequest
         }
         $params = array_merge($params, $send_to_erir_params);
 
-        return [
-            'query' => $params
-        ];
+        return $params;
     }
 
     /**

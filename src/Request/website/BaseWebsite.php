@@ -43,9 +43,7 @@ class BaseWebsite extends AbstractAdfoxRequest
         $params = $this->mergeParams($params, $this->contractorID, 'contractorID');
         $params = $this->mergeParams($params, $this->url, 'url');
 
-        return [
-            'query' => $params
-        ];
+        return $params;
     }
 
     /**

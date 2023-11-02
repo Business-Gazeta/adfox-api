@@ -36,9 +36,7 @@ class BasePlace extends AbstractAdfoxRequest
         $params = $this->mergeParams($params, $this->pli, 'pli');
         $params = $this->mergeParams($params, $this->pop, 'pop');
 
-        return [
-            'query' => $params
-        ];
+        return $params;
     }
 
     /**
