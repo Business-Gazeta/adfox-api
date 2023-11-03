@@ -2,9 +2,17 @@
 
 namespace BusinessGazeta\AdfoxApi\Request\banner\modify;
 
+use BusinessGazeta\AdfoxApi\Enum\Banner\BannerAdLabelEnum;
+use BusinessGazeta\AdfoxApi\Enum\Banner\BannerIsEventsEnum;
+use BusinessGazeta\AdfoxApi\Enum\Banner\BannerIsUnplacedEnum;
+use BusinessGazeta\AdfoxApi\Enum\Banner\BannerSendToErirEnum;
+use BusinessGazeta\AdfoxApi\Enum\Banner\BannerShowMenuEnum;
+use BusinessGazeta\AdfoxApi\Enum\Banner\BannerStatusEnum;
+use BusinessGazeta\AdfoxApi\Enum\Banner\BannerTargetEnum;
 use BusinessGazeta\AdfoxApi\Helper\DateInterface;
 use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
 use BusinessGazeta\AdfoxApi\Request\banner\modify\Objects\BannerMediaData;
+use BusinessGazeta\AdfoxApi\Types\BannerCreativeContentTypes;
 use BusinessGazeta\AdfoxApi\Types\BannerSendToErirTypes;
 use DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -24,15 +32,15 @@ class BaseBanner extends AbstractAdfoxRequest
         max: 1000
     )]
     private ?int $priority = null;
-    private ?int $status = null;
-    private ?int $isEvents = null;
-    private ?int $isUnplaced = null;
+    private ?BannerStatusEnum $status = null;
+    private ?BannerIsEventsEnum $isEvents = null;
+    private ?BannerIsUnplacedEnum $isUnplaced = null;
     private ?string $backgroundColor = null;
     private ?string $width = null;
     private ?string $height = null;
     private ?string $imageURL = null;
     private ?string $hitURL = null;
-    private ?string $target = null;
+    private ?BannerTargetEnum $target = null;
     private ?string $alt = null;
     private ?array $userN = null;
     private ?array $eventN = null;
@@ -74,12 +82,12 @@ class BaseBanner extends AbstractAdfoxRequest
     )]
     private ?int $maxClicksPerHour = null;
     private ?string $trackingURL = null;
-    private ?int $showMenu = null;
-    private ?int $adLabel = null;
+    private ?BannerShowMenuEnum $showMenu = null;
+    private ?BannerAdLabelEnum $adLabel = null;
     private ?string $domain = null;
-    private ?int $sendToErir = null;
+    private ?BannerSendToErirEnum $sendToErir = null;
     private ?string $token = null;
-    private ?int $creativeContentType = null;
+    private ?BannerCreativeContentTypes $creativeContentType = null;
     private ?string $okveds = null;
     private ?string $markingDescription = null;
     private ?string $targetURL = null;
@@ -148,8 +156,10 @@ class BaseBanner extends AbstractAdfoxRequest
         }
         $params = $this->mergeParams($params, $this->creativeContentType, 'creativeContentType');
         $params = $this->mergeParams($params, $this->okveds, 'okveds[]');
+        $params = $this->mergeParams($params, $this->markingDescription, 'markingDescription');
         $params = $this->mergeParams($params, $this->targetURL, 'targetURL');
         $params = $this->mergeParams($params, $this->mediaData, 'mediaData[]');
+        $params = $this->mergeParams($params, $this->textData, 'textData[]');
         $send_to_erir_params = [];
         if (!is_null($this->sendToErirParams)) {
             foreach ($this->sendToErirParams as $key => $erir) {
@@ -166,561 +176,561 @@ class BaseBanner extends AbstractAdfoxRequest
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      */
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getTargetingProfileID(): int
+    public function getTargetingProfileID(): ?int
     {
         return $this->targetingProfileID;
     }
 
     /**
-     * @param int $targetingProfileID
+     * @param int|null $targetingProfileID
      */
-    public function setTargetingProfileID(int $targetingProfileID): void
+    public function setTargetingProfileID(?int $targetingProfileID): void
     {
         $this->targetingProfileID = $targetingProfileID;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime|null
      */
-    public function getDateStart(): \DateTime
+    public function getDateStart(): ?DateTime
     {
         return $this->dateStart;
     }
 
     /**
-     * @param \DateTime $dateStart
+     * @param DateTime|null $dateStart
      */
-    public function setDateStart(\DateTime $dateStart): void
+    public function setDateStart(?DateTime $dateStart): void
     {
         $this->dateStart = $dateStart;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime|null
      */
-    public function getDateEnd(): \DateTime
+    public function getDateEnd(): ?DateTime
     {
         return $this->dateEnd;
     }
 
     /**
-     * @param \DateTime $dateEnd
+     * @param DateTime|null $dateEnd
      */
-    public function setDateEnd(\DateTime $dateEnd): void
+    public function setDateEnd(?DateTime $dateEnd): void
     {
         $this->dateEnd = $dateEnd;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getPriority(): int
+    public function getPriority(): ?int
     {
         return $this->priority;
     }
 
     /**
-     * @param int $priority
+     * @param int|null $priority
      */
-    public function setPriority(int $priority): void
+    public function setPriority(?int $priority): void
     {
         $this->priority = $priority;
     }
 
     /**
-     * @return int
+     * @return BannerStatusEnum|null
      */
-    public function getStatus(): int
+    public function getStatus(): ?BannerStatusEnum
     {
         return $this->status;
     }
 
     /**
-     * @param int $status
+     * @param BannerStatusEnum|null $status
      */
-    public function setStatus(int $status): void
+    public function setStatus(?BannerStatusEnum $status): void
     {
         $this->status = $status;
     }
 
     /**
-     * @return int
+     * @return BannerIsEventsEnum|null
      */
-    public function getIsEvents(): int
+    public function getIsEvents(): ?BannerIsEventsEnum
     {
         return $this->isEvents;
     }
 
     /**
-     * @param int $isEvents
+     * @param BannerIsEventsEnum|null $isEvents
      */
-    public function setIsEvents(int $isEvents): void
+    public function setIsEvents(?BannerIsEventsEnum $isEvents): void
     {
         $this->isEvents = $isEvents;
     }
 
     /**
-     * @return int
+     * @return BannerIsUnplacedEnum|null
      */
-    public function getIsUnplaced(): int
+    public function getIsUnplaced(): ?BannerIsUnplacedEnum
     {
         return $this->isUnplaced;
     }
 
     /**
-     * @param int $isUnplaced
+     * @param BannerIsUnplacedEnum|null $isUnplaced
      */
-    public function setIsUnplaced(int $isUnplaced): void
+    public function setIsUnplaced(?BannerIsUnplacedEnum $isUnplaced): void
     {
         $this->isUnplaced = $isUnplaced;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getBackgroundColor(): string
+    public function getBackgroundColor(): ?string
     {
         return $this->backgroundColor;
     }
 
     /**
-     * @param string $backgroundColor
+     * @param string|null $backgroundColor
      */
-    public function setBackgroundColor(string $backgroundColor): void
+    public function setBackgroundColor(?string $backgroundColor): void
     {
         $this->backgroundColor = $backgroundColor;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getWidth(): string
+    public function getWidth(): ?string
     {
         return $this->width;
     }
 
     /**
-     * @param string $width
+     * @param string|null $width
      */
-    public function setWidth(string $width): void
+    public function setWidth(?string $width): void
     {
         $this->width = $width;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getHeight(): string
+    public function getHeight(): ?string
     {
         return $this->height;
     }
 
     /**
-     * @param string $height
+     * @param string|null $height
      */
-    public function setHeight(string $height): void
+    public function setHeight(?string $height): void
     {
         $this->height = $height;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getImageURL(): string
+    public function getImageURL(): ?string
     {
         return $this->imageURL;
     }
 
     /**
-     * @param string $imageURL
+     * @param string|null $imageURL
      */
-    public function setImageURL(string $imageURL): void
+    public function setImageURL(?string $imageURL): void
     {
         $this->imageURL = $imageURL;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getHitURL(): string
+    public function getHitURL(): ?string
     {
         return $this->hitURL;
     }
 
     /**
-     * @param string $hitURL
+     * @param string|null $hitURL
      */
-    public function setHitURL(string $hitURL): void
+    public function setHitURL(?string $hitURL): void
     {
         $this->hitURL = $hitURL;
     }
 
     /**
-     * @return string
+     * @return BannerTargetEnum|null
      */
-    public function getTarget(): string
+    public function getTarget(): ?BannerTargetEnum
     {
         return $this->target;
     }
 
     /**
-     * @param string $target
+     * @param BannerTargetEnum|null $target
      */
-    public function setTarget(string $target): void
+    public function setTarget(?BannerTargetEnum $target): void
     {
         $this->target = $target;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAlt(): string
+    public function getAlt(): ?string
     {
         return $this->alt;
     }
 
     /**
-     * @param string $alt
+     * @param string|null $alt
      */
-    public function setAlt(string $alt): void
+    public function setAlt(?string $alt): void
     {
         $this->alt = $alt;
     }
 
     /**
-     * @return string
+     * @return array|null
      */
-    public function getUserN(): array
+    public function getUserN(): ?array
     {
         return $this->userN;
     }
 
     /**
-     * @param array $userN
+     * @param array|null $userN
      */
-    public function setUserN(array $userN): void
+    public function setUserN(?array $userN): void
     {
         $this->userN = $userN;
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getEventN(): array
+    public function getEventN(): ?array
     {
         return $this->eventN;
     }
 
     /**
-     * @param array $eventN
+     * @param array|null $eventN
      */
-    public function setEventN(array $eventN): void
+    public function setEventN(?array $eventN): void
     {
         $this->eventN = $eventN;
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getHitURLN(): array
+    public function getHitURLN(): ?array
     {
         return $this->hitURLN;
     }
 
     /**
-     * @param array $hitURLN
+     * @param array|null $hitURLN
      */
-    public function setHitURLN(array $hitURLN): void
+    public function setHitURLN(?array $hitURLN): void
     {
         $this->hitURLN = $hitURLN;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMaxImpressions(): int
+    public function getMaxImpressions(): ?int
     {
         return $this->maxImpressions;
     }
 
     /**
-     * @param int $maxImpressions
+     * @param int|null $maxImpressions
      */
-    public function setMaxImpressions(int $maxImpressions): void
+    public function setMaxImpressions(?int $maxImpressions): void
     {
         $this->maxImpressions = $maxImpressions;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMaxImpressionsPerDay(): int
+    public function getMaxImpressionsPerDay(): ?int
     {
         return $this->maxImpressionsPerDay;
     }
 
     /**
-     * @param int $maxImpressionsPerDay
+     * @param int|null $maxImpressionsPerDay
      */
-    public function setMaxImpressionsPerDay(int $maxImpressionsPerDay): void
+    public function setMaxImpressionsPerDay(?int $maxImpressionsPerDay): void
     {
         $this->maxImpressionsPerDay = $maxImpressionsPerDay;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMaxImpressionsPerHour(): int
+    public function getMaxImpressionsPerHour(): ?int
     {
         return $this->maxImpressionsPerHour;
     }
 
     /**
-     * @param int $maxImpressionsPerHour
+     * @param int|null $maxImpressionsPerHour
      */
-    public function setMaxImpressionsPerHour(int $maxImpressionsPerHour): void
+    public function setMaxImpressionsPerHour(?int $maxImpressionsPerHour): void
     {
         $this->maxImpressionsPerHour = $maxImpressionsPerHour;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMaxClicks(): int
+    public function getMaxClicks(): ?int
     {
         return $this->maxClicks;
     }
 
     /**
-     * @param int $maxClicks
+     * @param int|null $maxClicks
      */
-    public function setMaxClicks(int $maxClicks): void
+    public function setMaxClicks(?int $maxClicks): void
     {
         $this->maxClicks = $maxClicks;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMaxClicksPerDay(): int
+    public function getMaxClicksPerDay(): ?int
     {
         return $this->maxClicksPerDay;
     }
 
     /**
-     * @param int $maxClicksPerDay
+     * @param int|null $maxClicksPerDay
      */
-    public function setMaxClicksPerDay(int $maxClicksPerDay): void
+    public function setMaxClicksPerDay(?int $maxClicksPerDay): void
     {
         $this->maxClicksPerDay = $maxClicksPerDay;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMaxClicksPerHour(): int
+    public function getMaxClicksPerHour(): ?int
     {
         return $this->maxClicksPerHour;
     }
 
     /**
-     * @param int $maxClicksPerHour
+     * @param int|null $maxClicksPerHour
      */
-    public function setMaxClicksPerHour(int $maxClicksPerHour): void
+    public function setMaxClicksPerHour(?int $maxClicksPerHour): void
     {
         $this->maxClicksPerHour = $maxClicksPerHour;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTrackingURL(): string
+    public function getTrackingURL(): ?string
     {
         return $this->trackingURL;
     }
 
     /**
-     * @param string $trackingURL
+     * @param string|null $trackingURL
      */
-    public function setTrackingURL(string $trackingURL): void
+    public function setTrackingURL(?string $trackingURL): void
     {
         $this->trackingURL = $trackingURL;
     }
 
     /**
-     * @return int
+     * @return BannerShowMenuEnum|null
      */
-    public function getShowMenu(): int
+    public function getShowMenu(): ?BannerShowMenuEnum
     {
         return $this->showMenu;
     }
 
     /**
-     * @param int $showMenu
+     * @param BannerShowMenuEnum|null $showMenu
      */
-    public function setShowMenu(int $showMenu): void
+    public function setShowMenu(?BannerShowMenuEnum $showMenu): void
     {
         $this->showMenu = $showMenu;
     }
 
     /**
-     * @return int
+     * @return BannerAdLabelEnum|null
      */
-    public function getAdLabel(): int
+    public function getAdLabel(): ?BannerAdLabelEnum
     {
         return $this->adLabel;
     }
 
     /**
-     * @param int $adLabel
+     * @param BannerAdLabelEnum|null $adLabel
      */
-    public function setAdLabel(int $adLabel): void
+    public function setAdLabel(?BannerAdLabelEnum $adLabel): void
     {
         $this->adLabel = $adLabel;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDomain(): string
+    public function getDomain(): ?string
     {
         return $this->domain;
     }
 
     /**
-     * @param string $domain
+     * @param string|null $domain
      */
-    public function setDomain(string $domain): void
+    public function setDomain(?string $domain): void
     {
         $this->domain = $domain;
     }
 
     /**
-     * @return int
+     * @return BannerSendToErirEnum|null
      */
-    public function getSendToErir(): int
+    public function getSendToErir(): ?BannerSendToErirEnum
     {
         return $this->sendToErir;
     }
 
     /**
-     * @param int $sendToErir
+     * @param BannerSendToErirEnum|null $sendToErir
      */
-    public function setSendToErir(int $sendToErir): void
+    public function setSendToErir(?BannerSendToErirEnum $sendToErir): void
     {
         $this->sendToErir = $sendToErir;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getToken(): string
+    public function getToken(): ?string
     {
         return $this->token;
     }
 
     /**
-     * @param string $token
+     * @param string|null $token
      */
-    public function setToken(string $token): void
+    public function setToken(?string $token): void
     {
         $this->token = $token;
     }
 
     /**
-     * @return int
+     * @return BannerCreativeContentTypes|null
      */
-    public function getCreativeContentType(): int
+    public function getCreativeContentType(): ?BannerCreativeContentTypes
     {
         return $this->creativeContentType;
     }
 
     /**
-     * @param int $creativeContentType
+     * @param BannerCreativeContentTypes|null $creativeContentType
      */
-    public function setCreativeContentType(int $creativeContentType): void
+    public function setCreativeContentType(?BannerCreativeContentTypes $creativeContentType): void
     {
         $this->creativeContentType = $creativeContentType;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getOkveds(): string
+    public function getOkveds(): ?string
     {
         return $this->okveds;
     }
 
     /**
-     * @param string $okveds
+     * @param string|null $okveds
      */
-    public function setOkveds(string $okveds): void
+    public function setOkveds(?string $okveds): void
     {
         $this->okveds = $okveds;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMarkingDescription(): string
+    public function getMarkingDescription(): ?string
     {
         return $this->markingDescription;
     }
 
     /**
-     * @param string $markingDescription
+     * @param string|null $markingDescription
      */
-    public function setMarkingDescription(string $markingDescription): void
+    public function setMarkingDescription(?string $markingDescription): void
     {
         $this->markingDescription = $markingDescription;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTargetURL(): string
+    public function getTargetURL(): ?string
     {
         return $this->targetURL;
     }
 
     /**
-     * @param string $targetURL
+     * @param string|null $targetURL
      */
-    public function setTargetURL(string $targetURL): void
+    public function setTargetURL(?string $targetURL): void
     {
         $this->targetURL = $targetURL;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTextData(): string
+    public function getTextData(): ?string
     {
         return $this->textData;
     }
 
     /**
-     * @param string $textData
+     * @param string|null $textData
      */
-    public function setTextData(string $textData): void
+    public function setTextData(?string $textData): void
     {
         $this->textData = $textData;
     }
@@ -756,6 +766,5 @@ class BaseBanner extends AbstractAdfoxRequest
     {
         $this->sendToErirParams = $sendToErirParams;
     }
-
 
 }

@@ -2,6 +2,7 @@
 
 namespace BusinessGazeta\AdfoxApi\Request\bannerType;
 
+use BusinessGazeta\AdfoxApi\Enum\BannerType\BannerTypeIsOnEnum;
 use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -14,7 +15,7 @@ class Modify extends AbstractAdfoxRequest
 {
     private int $objectID;
     private ?string $name = null;
-    private  ?int $isOn = null;
+    private  ?BannerTypeIsOnEnum $isOn = null;
     #[Assert\Range(
         notInRangeMessage: 'Допустимые значения: от 1 до 2147483647.',
         min: 1,
@@ -80,17 +81,17 @@ class Modify extends AbstractAdfoxRequest
     }
 
     /**
-     * @return int|null
+     * @return BannerTypeIsOnEnum|null
      */
-    public function getIsOn(): ?int
+    public function getIsOn(): ?BannerTypeIsOnEnum
     {
         return $this->isOn;
     }
 
     /**
-     * @param int|null $isOn
+     * @param BannerTypeIsOnEnum|null $isOn
      */
-    public function setIsOn(?int $isOn): void
+    public function setIsOn(?BannerTypeIsOnEnum $isOn): void
     {
         $this->isOn = $isOn;
     }

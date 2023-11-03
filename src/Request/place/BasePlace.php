@@ -2,6 +2,8 @@
 
 namespace BusinessGazeta\AdfoxApi\Request\place;
 
+use BusinessGazeta\AdfoxApi\Enum\Place\PlacePctEnum;
+use BusinessGazeta\AdfoxApi\Enum\Place\PlacePlpEnum;
 use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -15,8 +17,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class BasePlace extends AbstractAdfoxRequest
 {
     private ?int $categoryID = null;
-    private ?int $pct = null;
-    private ?int $plp = null;
+    private ?PlacePctEnum $pct = null;
+    private ?PlacePlpEnum $plp = null;
     #[Assert\GreaterThan(value: 1)]
     private ?int $pli = null;
     #[Assert\GreaterThan(value: 1)]
@@ -56,33 +58,33 @@ class BasePlace extends AbstractAdfoxRequest
     }
 
     /**
-     * @return int|null
+     * @return PlacePctEnum|null
      */
-    public function getPct(): ?int
+    public function getPct(): ?PlacePctEnum
     {
         return $this->pct;
     }
 
     /**
-     * @param int|null $pct
+     * @param PlacePctEnum|null $pct
      */
-    public function setPct(?int $pct): void
+    public function setPct(?PlacePctEnum $pct): void
     {
         $this->pct = $pct;
     }
 
     /**
-     * @return int|null
+     * @return PlacePlpEnum|null
      */
-    public function getPlp(): ?int
+    public function getPlp(): ?PlacePlpEnum
     {
         return $this->plp;
     }
 
     /**
-     * @param int|null $plp
+     * @param PlacePlpEnum|null $plp
      */
-    public function setPlp(?int $plp): void
+    public function setPlp(?PlacePlpEnum $plp): void
     {
         $this->plp = $plp;
     }

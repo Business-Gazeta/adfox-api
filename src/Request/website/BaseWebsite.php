@@ -2,6 +2,8 @@
 
 namespace BusinessGazeta\AdfoxApi\Request\website;
 
+use BusinessGazeta\AdfoxApi\Enum\Website\WebsitePlatformTypeEnum;
+use BusinessGazeta\AdfoxApi\Enum\Website\WebsiteSendToErirEnum;
 use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -16,9 +18,9 @@ class BaseWebsite extends AbstractAdfoxRequest
 {
     private ?int $webmasterID = null;
     private ?int $categoryID = null;
-    private ?int $sendToErir = null;
+    private ?WebsiteSendToErirEnum $sendToErir = null;
     private ?string $platformName = null;
-    private ?int $platformType = null;
+    private ?WebsitePlatformTypeEnum $platformType = null;
     private ?int $contractorID = null;
     #[Assert\Expression(
         "this.getPlatformType() === 2  or this.getPlatformType() === NULL or this.getUrl() starts with 'http'",
@@ -79,17 +81,17 @@ class BaseWebsite extends AbstractAdfoxRequest
     }
 
     /**
-     * @return int|null
+     * @return WebsiteSendToErirEnum|null
      */
-    public function getSendToErir(): ?int
+    public function getSendToErir(): ?WebsiteSendToErirEnum
     {
         return $this->sendToErir;
     }
 
     /**
-     * @param int|null $sendToErir
+     * @param WebsiteSendToErirEnum|null $sendToErir
      */
-    public function setSendToErir(?int $sendToErir): void
+    public function setSendToErir(?WebsiteSendToErirEnum $sendToErir): void
     {
         $this->sendToErir = $sendToErir;
     }
@@ -111,17 +113,17 @@ class BaseWebsite extends AbstractAdfoxRequest
     }
 
     /**
-     * @return int|null
+     * @return WebsitePlatformTypeEnum|null
      */
-    public function getPlatformType(): ?int
+    public function getPlatformType(): ?WebsitePlatformTypeEnum
     {
         return $this->platformType;
     }
 
     /**
-     * @param int|null $platformType
+     * @param WebsitePlatformTypeEnum|null $platformType
      */
-    public function setPlatformType(?int $platformType): void
+    public function setPlatformType(?WebsitePlatformTypeEnum $platformType): void
     {
         $this->platformType = $platformType;
     }
@@ -157,6 +159,5 @@ class BaseWebsite extends AbstractAdfoxRequest
     {
         $this->url = $url;
     }
-
 
 }

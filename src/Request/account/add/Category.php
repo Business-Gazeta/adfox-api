@@ -2,6 +2,7 @@
 
 namespace BusinessGazeta\AdfoxApi\Request\account\add;
 
+use BusinessGazeta\AdfoxApi\Enum\Category\CategoryTypeEnum;
 use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
 
 /**
@@ -12,7 +13,7 @@ use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
 class Category extends AbstractAdfoxRequest
 {
     private string $name;
-    private ?int $type = null;
+    private ?CategoryTypeEnum $type = null;
     private ?int $timeout = null;
 
     public function __construct(string $name)
@@ -49,17 +50,17 @@ class Category extends AbstractAdfoxRequest
     }
 
     /**
-     * @return int|null
+     * @return CategoryTypeEnum|null
      */
-    public function getType(): ?int
+    public function getType(): ?CategoryTypeEnum
     {
         return $this->type;
     }
 
     /**
-     * @param int|null $type
+     * @param CategoryTypeEnum|null $type
      */
-    public function setType(?int $type): void
+    public function setType(?CategoryTypeEnum $type): void
     {
         $this->type = $type;
     }

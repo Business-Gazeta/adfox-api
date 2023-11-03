@@ -2,6 +2,7 @@
 
 namespace BusinessGazeta\AdfoxApi\Request\account\add;
 
+use BusinessGazeta\AdfoxApi\Enum\BannerType\BannerTypePresentationTypeIDEnum;
 use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
 
 /**
@@ -12,7 +13,7 @@ use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
 class BannerType extends AbstractAdfoxRequest
 {
     private string $name;
-    private int $presentationTypeID;
+    private BannerTypePresentationTypeIDEnum $presentationTypeID;
 
     public function params(): array
     {
@@ -42,20 +43,19 @@ class BannerType extends AbstractAdfoxRequest
     }
 
     /**
-     * @return int
+     * @return BannerTypePresentationTypeIDEnum
      */
-    public function getPresentationTypeID(): int
+    public function getPresentationTypeID(): BannerTypePresentationTypeIDEnum
     {
         return $this->presentationTypeID;
     }
 
     /**
-     * @param int $presentationTypeID
+     * @param BannerTypePresentationTypeIDEnum $presentationTypeID
      */
-    public function setPresentationTypeID(int $presentationTypeID): void
+    public function setPresentationTypeID(BannerTypePresentationTypeIDEnum $presentationTypeID): void
     {
         $this->presentationTypeID = $presentationTypeID;
     }
-
 
 }

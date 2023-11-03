@@ -2,6 +2,7 @@
 
 namespace BusinessGazeta\AdfoxApi\Request\account\list;
 
+use BusinessGazeta\AdfoxApi\Enum\Banner\BannerShowEnum;
 use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
 
 /**
@@ -13,7 +14,7 @@ class Banner extends AbstractAdfoxRequest
 {
     private ?int $actionObjectID = null;
     private ?string $listCampaignIDs = null;
-    private ?string $show = null;
+    private ?BannerShowEnum $show = null;
     private ?string $search = null;
 
     public function params(): array
@@ -62,17 +63,17 @@ class Banner extends AbstractAdfoxRequest
     }
 
     /**
-     * @return string|null
+     * @return BannerShowEnum|null
      */
-    public function getShow(): ?string
+    public function getShow(): ?BannerShowEnum
     {
         return $this->show;
     }
 
     /**
-     * @param string|null $show
+     * @param BannerShowEnum|null $show
      */
-    public function setShow(?string $show): void
+    public function setShow(?BannerShowEnum $show): void
     {
         $this->show = $show;
     }
@@ -92,7 +93,5 @@ class Banner extends AbstractAdfoxRequest
     {
         $this->search = $search;
     }
-
-
 
 }

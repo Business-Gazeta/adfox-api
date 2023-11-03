@@ -2,6 +2,8 @@
 
 namespace BusinessGazeta\AdfoxApi\Request\zone;
 
+use BusinessGazeta\AdfoxApi\Enum\Zone\ZoneIsAutoRefererEnum;
+use BusinessGazeta\AdfoxApi\Enum\Zone\ZoneTemplateTypeIDEnum;
 use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -12,8 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class BaseZone extends AbstractAdfoxRequest
 {
     private ?int $categoryID = null;
-    private ?int $isAutoReferer = null;
-    private ?int $templateTypeID = null;
+    private ?ZoneIsAutoRefererEnum $isAutoReferer = null;
+    private ?ZoneTemplateTypeIDEnum $templateTypeID = null;
     private ?string $template = null;
     private ?int $templateExcluded = null;
 
@@ -47,33 +49,33 @@ class BaseZone extends AbstractAdfoxRequest
     }
 
     /**
-     * @return int|null
+     * @return ZoneIsAutoRefererEnum|null
      */
-    public function getIsAutoReferer(): ?int
+    public function getIsAutoReferer(): ?ZoneIsAutoRefererEnum
     {
         return $this->isAutoReferer;
     }
 
     /**
-     * @param int|null $isAutoReferer
+     * @param ZoneIsAutoRefererEnum|null $isAutoReferer
      */
-    public function setIsAutoReferer(?int $isAutoReferer): void
+    public function setIsAutoReferer(?ZoneIsAutoRefererEnum $isAutoReferer): void
     {
         $this->isAutoReferer = $isAutoReferer;
     }
 
     /**
-     * @return int|null
+     * @return ZoneTemplateTypeIDEnum|null
      */
-    public function getTemplateTypeID(): ?int
+    public function getTemplateTypeID(): ?ZoneTemplateTypeIDEnum
     {
         return $this->templateTypeID;
     }
 
     /**
-     * @param int|null $templateTypeID
+     * @param ZoneTemplateTypeIDEnum|null $templateTypeID
      */
-    public function setTemplateTypeID(?int $templateTypeID): void
+    public function setTemplateTypeID(?ZoneTemplateTypeIDEnum $templateTypeID): void
     {
         $this->templateTypeID = $templateTypeID;
     }
