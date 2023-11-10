@@ -106,10 +106,10 @@ class BaseBanner extends AbstractAdfoxRequest
         $params = parent::params();
         $params = $this->mergeParams($params, $this->name, 'name');
         $params = $this->mergeParams($params, $this->targetingProfileID, 'targetingProfileID');
-        $params = $this->mergeParams($params, $this->dateStart->format(DateInterface::DATE_FORMAT), 'dateStart');
-        $params = $this->mergeParams($params, $this->dateEnd->format(DateInterface::DATE_FORMAT), 'dateEnd');
+        $params = $this->mergeParams($params, $this->dateStart?->format(DateInterface::DATE_FORMAT), 'dateStart');
+        $params = $this->mergeParams($params, $this->dateEnd?->format(DateInterface::DATE_FORMAT), 'dateEnd');
         $params = $this->mergeParams($params, $this->priority, 'priority');
-        $params = $this->mergeParams($params, $this->status, 'status');
+        $params = $this->mergeParams($params, $this->status->value, 'status');
         $params = $this->mergeParams($params, $this->isEvents, 'isEvents');
         $params = $this->mergeParams($params, $this->isUnplaced, 'isUnplaced');
         $params = $this->mergeParams($params, $this->backgroundColor, 'backgroundColor');
@@ -164,9 +164,9 @@ class BaseBanner extends AbstractAdfoxRequest
         if (!is_null($this->sendToErirParams)) {
             foreach ($this->sendToErirParams as $key => $erir) {
                 if (is_int($key)) {
-                    $send_to_erir_params[] = ['sendToErirParameter' . $key => $erir];
+                    $send_to_erir_params['sendToErirParameter' . $key] = $erir;
                 } else {
-                    $send_to_erir_params[] = ['sendToErir' . $key => $erir];
+                    $send_to_erir_params['sendToErir' . $key] = $erir;
                 }
             }
         }
