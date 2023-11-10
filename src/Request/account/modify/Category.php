@@ -27,7 +27,7 @@ class Category extends AbstractAdfoxRequest
         $params = parent::params();
         $params = array_merge($params, ['actionObjectID' => $this->actionObjectID]);
         $params = $this->mergeParams($params, $this->name, 'name');
-        $params = $this->mergeParams($params, $this->type, 'type');
+        $params = $this->mergeParams($params, $this->type->value, 'type');
         $params = $this->mergeParams($params, $this->timeout, 'timeout');
 
         return [

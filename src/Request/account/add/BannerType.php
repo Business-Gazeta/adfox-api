@@ -19,7 +19,7 @@ class BannerType extends AbstractAdfoxRequest
     {
         $params = parent::params();
         $params = array_merge($params, ['name' => $this->name]);
-        $params = array_merge($params, ['presentationTypeID' => $this->presentationTypeID]);
+        $params = array_merge($params, ['presentationTypeID' => $this->presentationTypeID->value]);
 
         return [
             'query' => $params

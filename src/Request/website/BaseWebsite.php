@@ -39,9 +39,9 @@ class BaseWebsite extends AbstractAdfoxRequest
         $params = parent::params();
         $params = $this->mergeParams($params, $this->webmasterID, 'webmasterID');
         $params = $this->mergeParams($params, $this->categoryID, 'categoryID');
-        $params = $this->mergeParams($params, $this->sendToErir, 'sendToErir');
+        $params = $this->mergeParams($params, $this->sendToErir->value, 'sendToErir');
         $params = $this->mergeParams($params, $this->platformName, 'platformName');
-        $params = $this->mergeParams($params, $this->platformType, 'platformType');
+        $params = $this->mergeParams($params, $this->platformType->value, 'platformType');
         $params = $this->mergeParams($params, $this->contractorID, 'contractorID');
         $params = $this->mergeParams($params, $this->url, 'url');
 

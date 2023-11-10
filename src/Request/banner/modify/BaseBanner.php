@@ -3,6 +3,7 @@
 namespace BusinessGazeta\AdfoxApi\Request\banner\modify;
 
 use BusinessGazeta\AdfoxApi\Enum\Banner\BannerAdLabelEnum;
+use BusinessGazeta\AdfoxApi\Enum\Banner\BannerCreativeContentEnum;
 use BusinessGazeta\AdfoxApi\Enum\Banner\BannerIsEventsEnum;
 use BusinessGazeta\AdfoxApi\Enum\Banner\BannerIsUnplacedEnum;
 use BusinessGazeta\AdfoxApi\Enum\Banner\BannerSendToErirEnum;
@@ -12,8 +13,6 @@ use BusinessGazeta\AdfoxApi\Enum\Banner\BannerTargetEnum;
 use BusinessGazeta\AdfoxApi\Helper\DateInterface;
 use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
 use BusinessGazeta\AdfoxApi\Request\banner\modify\Objects\BannerMediaData;
-use BusinessGazeta\AdfoxApi\Types\BannerCreativeContentTypes;
-use BusinessGazeta\AdfoxApi\Types\BannerSendToErirTypes;
 use DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -87,7 +86,7 @@ class BaseBanner extends AbstractAdfoxRequest
     private ?string $domain = null;
     private ?BannerSendToErirEnum $sendToErir = null;
     private ?string $token = null;
-    private ?BannerCreativeContentTypes $creativeContentType = null;
+    private ?BannerCreativeContentEnum $creativeContentType = null;
     private ?string $okveds = null;
     private ?string $markingDescription = null;
     private ?string $targetURL = null;
@@ -110,14 +109,14 @@ class BaseBanner extends AbstractAdfoxRequest
         $params = $this->mergeParams($params, $this->dateEnd?->format(DateInterface::DATE_FORMAT), 'dateEnd');
         $params = $this->mergeParams($params, $this->priority, 'priority');
         $params = $this->mergeParams($params, $this->status->value, 'status');
-        $params = $this->mergeParams($params, $this->isEvents, 'isEvents');
-        $params = $this->mergeParams($params, $this->isUnplaced, 'isUnplaced');
+        $params = $this->mergeParams($params, $this->isEvents->value, 'isEvents');
+        $params = $this->mergeParams($params, $this->isUnplaced->value, 'isUnplaced');
         $params = $this->mergeParams($params, $this->backgroundColor, 'backgroundColor');
         $params = $this->mergeParams($params, $this->width, 'width');
         $params = $this->mergeParams($params, $this->height, 'height');
         $params = $this->mergeParams($params, $this->imageURL, 'imageURL');
         $params = $this->mergeParams($params, $this->hitURL, 'hitURL');
-        $params = $this->mergeParams($params, $this->target, 'target');
+        $params = $this->mergeParams($params, $this->target->value, 'target');
         $params = $this->mergeParams($params, $this->alt, 'alt');
         $users = [];
         if (!is_null($this->userN)) {
@@ -125,21 +124,21 @@ class BaseBanner extends AbstractAdfoxRequest
                 $users[] = ['user' . $key => $user];
             }
         }
-        $params = array_merge($params, $users);
+        $params = array_merge($params, ...$users);
         $events = [];
         if (!is_null($this->eventN)) {
             foreach ($this->eventN as $key => $event) {
                 $events[] = ['event' . $key => $event];
             }
         }
-        $params = array_merge($params, $events);
+        $params = array_merge($params, ...$events);
         $hit_urls = [];
         if (!is_null($this->hitURLN)) {
             foreach ($this->hitURLN as $key => $hit_url) {
                 $hit_urls[] = ['hitURL' . $key => $hit_url];
             }
         }
-        $params = array_merge($params, $hit_urls);
+        $params = array_merge($params, ...$hit_urls);
         $params = $this->mergeParams($params, $this->maxImpressions, 'maxImpressions');
         $params = $this->mergeParams($params, $this->maxImpressionsPerDay, 'maxImpressionsPerDay');
         $params = $this->mergeParams($params, $this->maxImpressionsPerHour, 'maxImpressionsPerHour');
@@ -147,14 +146,14 @@ class BaseBanner extends AbstractAdfoxRequest
         $params = $this->mergeParams($params, $this->maxClicksPerDay, 'maxClicksPerDay');
         $params = $this->mergeParams($params, $this->maxClicksPerHour, 'maxClicksPerHour');
         $params = $this->mergeParams($params, $this->trackingURL, 'trackingURL');
-        $params = $this->mergeParams($params, $this->showMenu, 'showMenu');
-        $params = $this->mergeParams($params, $this->adLabel, 'adLabel');
+        $params = $this->mergeParams($params, $this->showMenu->value, 'showMenu');
+        $params = $this->mergeParams($params, $this->adLabel->value, 'adLabel');
         $params = $this->mergeParams($params, $this->domain, 'domain');
-        $params = $this->mergeParams($params, $this->sendToErir, 'sendToErir');
-        if (!is_null($this->sendToErir) && $this->sendToErir === BannerSendToErirTypes::NOT_SEND_TO_ERIR) {
+        $params = $this->mergeParams($params, $this->sendToErir->value, 'sendToErir');
+        if (!is_null($this->sendToErir) && $this->sendToErir === BannerSendToErirEnum::NOT_SEND_TO_ERIR) {
             $params = $this->mergeParams($params, $this->token, 'token');
         }
-        $params = $this->mergeParams($params, $this->creativeContentType, 'creativeContentType');
+        $params = $this->mergeParams($params, $this->creativeContentType->value, 'creativeContentType');
         $params = $this->mergeParams($params, $this->okveds, 'okveds[]');
         $params = $this->mergeParams($params, $this->markingDescription, 'markingDescription');
         $params = $this->mergeParams($params, $this->targetURL, 'targetURL');
@@ -656,17 +655,17 @@ class BaseBanner extends AbstractAdfoxRequest
     }
 
     /**
-     * @return BannerCreativeContentTypes|null
+     * @return BannerCreativeContentEnum|null
      */
-    public function getCreativeContentType(): ?BannerCreativeContentTypes
+    public function getCreativeContentType(): ?BannerCreativeContentEnum
     {
         return $this->creativeContentType;
     }
 
     /**
-     * @param BannerCreativeContentTypes|null $creativeContentType
+     * @param BannerCreativeContentEnum|null $creativeContentType
      */
-    public function setCreativeContentType(?BannerCreativeContentTypes $creativeContentType): void
+    public function setCreativeContentType(?BannerCreativeContentEnum $creativeContentType): void
     {
         $this->creativeContentType = $creativeContentType;
     }

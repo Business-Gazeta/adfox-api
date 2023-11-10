@@ -33,8 +33,8 @@ class BasePlace extends AbstractAdfoxRequest
     {
         $params = parent::params();
         $params = $this->mergeParams($params, $this->categoryID, 'categoryID');
-        $params = $this->mergeParams($params, $this->pct, 'pct');
-        $params = $this->mergeParams($params, $this->plp, 'plp');
+        $params = $this->mergeParams($params, $this->pct->value, 'pct');
+        $params = $this->mergeParams($params, $this->plp->value, 'plp');
         $params = $this->mergeParams($params, $this->pli, 'pli');
         $params = $this->mergeParams($params, $this->pop, 'pop');
 
