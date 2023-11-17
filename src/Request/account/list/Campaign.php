@@ -3,6 +3,7 @@
 namespace BusinessGazeta\AdfoxApi\Request\account\list;
 
 use BusinessGazeta\AdfoxApi\Enum\Campaign\CampaignShowEnum;
+use BusinessGazeta\AdfoxApi\Enum\Campaign\CampaignShowModeEnum;
 use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
 use DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -35,7 +36,7 @@ class Campaign extends AbstractAdfoxRequest
         "!this.isTargetingUser() or this.getCriteriaID() !== NULL",
         message: 'При show = targetingUser необходимо указать дополнительный параметр criteriaID',
     )]
-    private ?string $showMode = null;
+    private ?CampaignShowModeEnum $showMode = null;
 
     public function params(): array
     {
@@ -44,10 +45,10 @@ class Campaign extends AbstractAdfoxRequest
         $params = $this->mergeParams($params, $this->superCampaignID, 'superCampaignID');
         $params = $this->mergeParams($params, $this->dateAddedFrom?->format('Y-m-d'), 'dateAddedFrom');
         $params = $this->mergeParams($params, $this->dateAddedTo?->format('Y-m-d'), 'dateAddedTo');
-        $params = $this->mergeParams($params, $this->show->value, 'show');
+        $params = $this->mergeParams($params, $this->show?->value, 'show');
         $params = $this->mergeParams($params, $this->search, 'search');
         $params = $this->mergeParams($params, $this->criteriaID, 'criteriaID');
-        $params = $this->mergeParams($params, $this->showMode, 'showMode');
+        $params = $this->mergeParams($params, $this->showMode?->value, 'showMode');
 
 
         return [
@@ -168,17 +169,17 @@ class Campaign extends AbstractAdfoxRequest
     }
 
     /**
-     * @return string|null
+     * @return CampaignShowModeEnum|null
      */
-    public function getShowMode(): ?string
+    public function getShowMode(): ?CampaignShowModeEnum
     {
         return $this->showMode;
     }
 
     /**
-     * @param string|null $showMode
+     * @param CampaignShowModeEnum|null $showMode
      */
-    public function setShowMode(?string $showMode): void
+    public function setShowMode(?CampaignShowModeEnum $showMode): void
     {
         $this->showMode = $showMode;
     }
