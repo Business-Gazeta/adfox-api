@@ -108,15 +108,15 @@ class BaseBanner extends AbstractAdfoxRequest
         $params = $this->mergeParams($params, $this->dateStart?->format(DateInterface::DATE_FORMAT), 'dateStart');
         $params = $this->mergeParams($params, $this->dateEnd?->format(DateInterface::DATE_FORMAT), 'dateEnd');
         $params = $this->mergeParams($params, $this->priority, 'priority');
-        $params = $this->mergeParams($params, $this->status->value, 'status');
-        $params = $this->mergeParams($params, $this->isEvents->value, 'isEvents');
-        $params = $this->mergeParams($params, $this->isUnplaced->value, 'isUnplaced');
+        $params = $this->mergeParams($params, $this->status?->value, 'status');
+        $params = $this->mergeParams($params, $this->isEvents?->value, 'isEvents');
+        $params = $this->mergeParams($params, $this->isUnplaced?->value, 'isUnplaced');
         $params = $this->mergeParams($params, $this->backgroundColor, 'backgroundColor');
         $params = $this->mergeParams($params, $this->width, 'width');
         $params = $this->mergeParams($params, $this->height, 'height');
         $params = $this->mergeParams($params, $this->imageURL, 'imageURL');
         $params = $this->mergeParams($params, $this->hitURL, 'hitURL');
-        $params = $this->mergeParams($params, $this->target->value, 'target');
+        $params = $this->mergeParams($params, $this->target?->value, 'target');
         $params = $this->mergeParams($params, $this->alt, 'alt');
         $users = [];
         if (!is_null($this->userN)) {
@@ -146,14 +146,14 @@ class BaseBanner extends AbstractAdfoxRequest
         $params = $this->mergeParams($params, $this->maxClicksPerDay, 'maxClicksPerDay');
         $params = $this->mergeParams($params, $this->maxClicksPerHour, 'maxClicksPerHour');
         $params = $this->mergeParams($params, $this->trackingURL, 'trackingURL');
-        $params = $this->mergeParams($params, $this->showMenu->value, 'showMenu');
-        $params = $this->mergeParams($params, $this->adLabel->value, 'adLabel');
+        $params = $this->mergeParams($params, $this->showMenu?->value, 'showMenu');
+        $params = $this->mergeParams($params, $this->adLabel?->value, 'adLabel');
         $params = $this->mergeParams($params, $this->domain, 'domain');
-        $params = $this->mergeParams($params, $this->sendToErir->value, 'sendToErir');
+        $params = $this->mergeParams($params, $this->sendToErir?->value, 'sendToErir');
         if (!is_null($this->sendToErir) && $this->sendToErir === BannerSendToErirEnum::NOT_SEND_TO_ERIR) {
             $params = $this->mergeParams($params, $this->token, 'token');
         }
-        $params = $this->mergeParams($params, $this->creativeContentType->value, 'creativeContentType');
+        $params = $this->mergeParams($params, $this->creativeContentType?->value, 'creativeContentType');
         $params = $this->mergeParams($params, $this->okveds, 'okveds[]');
         $params = $this->mergeParams($params, $this->markingDescription, 'markingDescription');
         $params = $this->mergeParams($params, $this->targetURL, 'targetURL');

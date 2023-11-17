@@ -24,8 +24,8 @@ class BaseZone extends AbstractAdfoxRequest
     {
         $params = parent::params();
         $params = $this->mergeParams($params, $this->categoryID, 'categoryID');
-        $params = $this->mergeParams($params, $this->isAutoReferer->value, 'isAutoReferer');
-        $params = $this->mergeParams($params, $this->templateTypeID->value, 'templateTypeID');
+        $params = $this->mergeParams($params, $this->isAutoReferer?->value, 'isAutoReferer');
+        $params = $this->mergeParams($params, $this->templateTypeID?->value, 'templateTypeID');
         $params = $this->mergeParams($params, $this->template, 'template');
         $params = $this->mergeParams($params, $this->templateExcluded, 'templateExcluded');
 
