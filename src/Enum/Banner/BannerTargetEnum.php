@@ -14,4 +14,12 @@ enum BannerTargetEnum: string
     case BLANK = '_blank';
     case PARENT = '_parent';
     case TOP = '_top';
+
+    public static function list():array {
+        $items = [];
+        foreach (self::cases() as $case) {
+            $items[$case->value] = $case->name;
+        }
+        return $items;
+    }
 }

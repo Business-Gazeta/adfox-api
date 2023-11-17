@@ -18,4 +18,12 @@ enum PlacePctEnum: int
     case NON_REPETITIVE = 2;
     case SEESION = 3;
     case UNIQUE_COMPANY = 4;
+
+    public static function list():array {
+        $items = [];
+        foreach (self::cases() as $case) {
+            $items[$case->value] = $case->name;
+        }
+        return $items;
+    }
 }

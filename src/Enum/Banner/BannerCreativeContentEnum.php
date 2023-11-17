@@ -24,4 +24,12 @@ enum BannerCreativeContentEnum: int
     case VIDEO_BROADCAST = 5;
     case AUDIO_BROADCAST = 6;
     case AUDIO_RECORDING = 7;
+
+    public static function list():array {
+        $items = [];
+        foreach (self::cases() as $case) {
+            $items[$case->value] = $case->name;
+        }
+        return $items;
+    }
 }

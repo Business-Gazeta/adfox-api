@@ -14,4 +14,12 @@ enum ZoneTemplateTypeIDEnum: int
 
     case STANDARD = 0;
     case POSIX2 = 1;
+
+    public static function list():array {
+        $items = [];
+        foreach (self::cases() as $case) {
+            $items[$case->value] = $case->name;
+        }
+        return $items;
+    }
 }
