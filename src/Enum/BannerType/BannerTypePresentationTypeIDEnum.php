@@ -12,4 +12,12 @@ enum BannerTypePresentationTypeIDEnum: int
 //    5 — XML. Код баннера будет выгружен как XML-код.
     case DIMENSIONLESS = 4;
     case XML = 5;
+
+    public static function list():array {
+        $items = [];
+        foreach (self::cases() as $case) {
+            $items[$case->value] = $case->name;
+        }
+        return $items;
+    }
 }

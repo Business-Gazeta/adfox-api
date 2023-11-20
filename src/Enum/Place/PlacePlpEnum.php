@@ -21,4 +21,12 @@ enum PlacePlpEnum: int
     case TWELVE_HOURS = 3;
     case TWENTY_FOUR_HOURS = 4;
     case OTHER = 5;
+
+    public static function list():array {
+        $items = [];
+        foreach (self::cases() as $case) {
+            $items[$case->value] = $case->name;
+        }
+        return $items;
+    }
 }

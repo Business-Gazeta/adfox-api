@@ -25,4 +25,12 @@ enum BannerShowEnum: string
     case COMMON = 'common';
     case SHORT = 'short';
     case ADVANCED = 'advanced';
+
+    public static function list():array {
+        $items = [];
+        foreach (self::cases() as $case) {
+            $items[$case->value] = $case->name;
+        }
+        return $items;
+    }
 }

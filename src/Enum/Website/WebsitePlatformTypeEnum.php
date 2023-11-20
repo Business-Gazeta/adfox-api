@@ -14,4 +14,12 @@ enum WebsitePlatformTypeEnum: int
     case APP = 0;
     case SITE = 1;
     case INF_SYSTEM = 2;
+
+    public static function list():array {
+        $items = [];
+        foreach (self::cases() as $case) {
+            $items[$case->value] = $case->name;
+        }
+        return $items;
+    }
 }

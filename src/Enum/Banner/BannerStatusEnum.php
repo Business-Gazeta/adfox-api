@@ -16,4 +16,12 @@ enum BannerStatusEnum: int
     case ACTIVE = 0;
     case SUSPENDED = 1;
     case COMPLETED = 2;
+
+    public static function list():array {
+        $items = [];
+        foreach (self::cases() as $case) {
+            $items[$case->value] = $case->name;
+        }
+        return $items;
+    }
 }

@@ -12,4 +12,12 @@ enum BannerTypeIsOnEnum: int
 //    1 — включен.
     case ENABLED = 1;
     case DISABLED = 0;
+
+    public static function list():array {
+        $items = [];
+        foreach (self::cases() as $case) {
+            $items[$case->value] = $case->name;
+        }
+        return $items;
+    }
 }

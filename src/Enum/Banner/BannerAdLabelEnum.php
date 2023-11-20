@@ -15,4 +15,12 @@ enum BannerAdLabelEnum: int
     case LABEL_IS_DISABLED = 0;
     case SHOW_ADVERTISING_LABEL = 1;
     case SHOW_SOCIAL_ADVERTISING_LABEL = 2;
+
+    public static function list():array {
+        $items = [];
+        foreach (self::cases() as $case) {
+            $items[$case->value] = $case->name;
+        }
+        return $items;
+    }
 }

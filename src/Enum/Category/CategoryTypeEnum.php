@@ -13,4 +13,12 @@ enum CategoryTypeEnum: int
 //    Значение по умолчанию: 0.
     case PERMANENT = 0;
     case TEMPORAL = 1;
+
+    public static function list():array {
+        $items = [];
+        foreach (self::cases() as $case) {
+            $items[$case->value] = $case->name;
+        }
+        return $items;
+    }
 }
