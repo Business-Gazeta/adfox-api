@@ -15,6 +15,12 @@ class BannerType extends AbstractAdfoxRequest
     private string $name;
     private BannerTypePresentationTypeIDEnum $presentationTypeID;
 
+    public function __construct(string $name, BannerTypePresentationTypeIDEnum $presentationTypeID)
+    {
+        $this->name = $name;
+        $this->presentationTypeID = $presentationTypeID;
+    }
+
     public function params(): array
     {
         $params = parent::params();

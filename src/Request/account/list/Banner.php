@@ -22,7 +22,7 @@ class Banner extends AbstractAdfoxRequest
         $params = parent::params();
         $params = $this->mergeParams($params, $this->actionObjectID, 'actionObjectID');
         $params = $this->mergeParams($params, $this->listCampaignIDs, 'listCampaignIDs');
-        $params = $this->mergeParams($params, $this->show->value, 'show');
+        $params = $this->mergeParams($params, $this->show?->value, 'show');
         $params = $this->mergeParams($params, $this->search, 'search');
 
         return [

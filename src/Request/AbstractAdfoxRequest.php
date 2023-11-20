@@ -2,9 +2,7 @@
 
 namespace BusinessGazeta\AdfoxApi\Request;
 
-use BusinessGazeta\AdfoxApi\Enum\ActionEnum;
 use BusinessGazeta\AdfoxApi\Enum\HttpMethodEnum;
-use BusinessGazeta\AdfoxApi\Enum\ObjectEnum;
 
 abstract class AbstractAdfoxRequest implements AdfoxRequestInterface
 {

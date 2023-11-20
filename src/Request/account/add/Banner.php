@@ -24,7 +24,6 @@ class Banner extends BaseBanner
     {
         $this->campaignID = $campaignID;
         $this->templateID = $templateID;
-
     }
 
     public function params(): array

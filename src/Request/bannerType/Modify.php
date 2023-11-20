@@ -39,7 +39,7 @@ class Modify extends AbstractAdfoxRequest
         $params = parent::params();
         $params = array_merge($params, ['objectID' => $this->objectID]);
         $params = $this->mergeParams($params, $this->name, 'name');
-        $params = $this->mergeParams($params, $this->isOn->value, 'isOn');
+        $params = $this->mergeParams($params, $this->isOn?->value, 'isOn');
         $params = $this->mergeParams($params, $this->width, 'width');
         $params = $this->mergeParams($params, $this->height, 'height');
 
