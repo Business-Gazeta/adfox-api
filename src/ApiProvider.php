@@ -2,6 +2,7 @@
 
 namespace BusinessGazeta\AdfoxApi;
 
+use BusinessGazeta\AdfoxApi\Enum\HttpMethodEnum;
 use BusinessGazeta\AdfoxApi\Request\AdfoxRequestInterface;
 use GuzzleHttp\Client;
 
@@ -38,10 +39,12 @@ class ApiProvider
     final public function execute(
         AdfoxRequestInterface $request
     ) {
+        $method =$request->getMethod()->value;
+        $params = $method === HttpMethodEnum::GET->value ? $request->params() : ['form_params' => $request->params()['query']];
         $response = $this->client->request(
-            $request->getMethod()->value,
+            $method,
             $this->endpointUrl,
-            $request->params()
+            $params
         )->getBody()->getContents();
 
         return $response;
