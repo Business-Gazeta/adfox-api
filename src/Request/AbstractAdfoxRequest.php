@@ -9,6 +9,7 @@ abstract class AbstractAdfoxRequest implements AdfoxRequestInterface
 
     private int $limit = 100;
     private int $offset = 0;
+    private HttpMethodEnum $method = HttpMethodEnum::GET;
 
     /**
      * @return int
@@ -46,9 +47,22 @@ abstract class AbstractAdfoxRequest implements AdfoxRequestInterface
         return $this;
     }
 
+    /**
+     * @return HttpMethodEnum
+     */
     public function getMethod(): HttpMethodEnum
     {
-        return HttpMethodEnum::GET;
+        return $this->method;
+    }
+
+    /**
+     * @param HttpMethodEnum $method
+     * @return $this
+     */
+    public function setMethod(HttpMethodEnum $method): AbstractAdfoxRequest
+    {
+        $this->method = $method;
+        return $this;
     }
 
     public function params(): array
@@ -89,4 +103,5 @@ abstract class AbstractAdfoxRequest implements AdfoxRequestInterface
         }
         return $params;
     }
+
 }
