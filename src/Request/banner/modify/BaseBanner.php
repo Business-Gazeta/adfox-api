@@ -157,6 +157,13 @@ class BaseBanner extends AbstractAdfoxRequest
         $params = $this->mergeParams($params, $this->okveds, 'okveds[]');
         $params = $this->mergeParams($params, $this->markingDescription, 'markingDescription');
         $params = $this->mergeParams($params, $this->targetURL, 'targetURL');
+        $media_data_params = [];
+        if (!is_null($this->mediaData)) {
+            foreach ($this->mediaData as $data) {
+                $media_data_params[] = $data->getData();
+            }
+        }
+        $params = array_merge($params, ['mediaData[]' => json_encode($media_data_params)]);
         $params = $this->mergeParams($params, $this->mediaData, 'mediaData[]');
         $params = $this->mergeParams($params, $this->textData, 'textData[]');
         $send_to_erir_params = [];

@@ -13,6 +13,7 @@ class BannerMediaData
     {
         $this->url = $url;
     }
+
     /**
      * @return string
      */
@@ -30,19 +31,24 @@ class BannerMediaData
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
     /**
-     * @param string $description
+     * @param string|null $description
      */
-    public function setDescription(string $description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
+    }
+
+    public function getData(): array
+    {
+        return ['url' => $this->getUrl(), 'description' => $this->getDescription() ?? ''];
     }
 
 }
