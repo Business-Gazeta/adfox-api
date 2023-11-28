@@ -2,7 +2,6 @@
 
 namespace BusinessGazeta\AdfoxApi\Request\campaign;
 
-use BusinessGazeta\AdfoxApi\Enum\Banner\BannerSendToErirEnum;
 use BusinessGazeta\AdfoxApi\Enum\Campaign\CampaignClickSmoothTypeIdEnum;
 use BusinessGazeta\AdfoxApi\Enum\Campaign\CampaignCostTypeEnum;
 use BusinessGazeta\AdfoxApi\Enum\Campaign\CampaignImpressionsSmoothTypeIdEnum;
@@ -10,22 +9,20 @@ use BusinessGazeta\AdfoxApi\Enum\Campaign\CampaignIsSessionEnum;
 use BusinessGazeta\AdfoxApi\Enum\Campaign\CampaignIsSimplifiedBannersEnum;
 use BusinessGazeta\AdfoxApi\Enum\Campaign\CampaignKindEnum;
 use BusinessGazeta\AdfoxApi\Enum\Campaign\CampaignLogicTypeEnum;
+use BusinessGazeta\AdfoxApi\Enum\Campaign\CampaignOuterMarkIdEnum;
 use BusinessGazeta\AdfoxApi\Enum\Campaign\CampaignRotationMethodIdEnum;
 use BusinessGazeta\AdfoxApi\Enum\Campaign\CampaignSendToErirEnum;
 use BusinessGazeta\AdfoxApi\Enum\Campaign\CampaignStatusEnum;
 use BusinessGazeta\AdfoxApi\Enum\Campaign\CampaignTracingTypeIdEnum;
 use BusinessGazeta\AdfoxApi\Helper\DateInterface;
 use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
-use BusinessGazeta\AdfoxApi\Request\banner\modify\Objects\BannerMediaData;
 use DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @link https://yandex.ru/dev/adfox/doc/v.1/account/account-add-campaign.html
- */
+
 #[Assert\Expression(
-    "(this.getLevel() > 0 and this.getLevel() < 11 and this.getKindId().value == 1) or (this.getLevel() == 11 and this.getKindId().value == 2) 
-    or (this.getLevel() > 11 and this.getLevel() < 21 and this.getKindId().value == 3) or this.getKindId().value == NULL",
+    "(this.getLevel() > 0 and this.getLevel() < 11 and this.getKindIdValue() == 1) or (this.getLevel() == 11 and this.getKindIdValue() == 2) 
+    or (this.getLevel() > 11 and this.getLevel() < 21 and this.getKindIdValue() == 3) or this.getKindId() == NULL",
     message: 'Допустимые значения с 1 по 10 включительно — для кампаний вида Гарантия, 11 - для кампаний вида Динамическая монетизация,
     с 12 по 20 - для кампаний вида Промо',
 )]
@@ -48,7 +45,7 @@ class BaseCampaign extends AbstractAdfoxRequest
     private ?CampaignStatusEnum $status = null;
     private ?int $sectorID = null;
     #[Assert\Expression(
-        "(this.getTrafficPercents() !== NULL or this.value !== 1",
+        "this.getTrafficPercents() !== NULL or this.rotationMethodID !== 1",
         message: 'Процент от трафика обязателен, если используется метод ротации по % от трафика',
     )]
     private ?CampaignRotationMethodIdEnum $rotationMethodID = null;
@@ -98,16 +95,17 @@ class BaseCampaign extends AbstractAdfoxRequest
         max: 99999
     )]
     #[Assert\Expression(
-        "(this !== NULL or this.getKindId().value !== 2",
+        "this !== NULL or this.getKindIdValue() !== 2",
         message: 'Пороговое значение CPM (обязательный параметр) для рекламной кампании вида Динамическая монетизация.',
     )]
     private ?int $cpm = null;
     private ?CampaignSendToErirEnum $sendToErir = null;
     #[Assert\Expression(
-        "(this !== NULL or this.getSendToErir.value !== 1",
+        "this !== NULL or this.getSendToErirValue() !== 1",
         message: 'Идентификатор договора. Обязательно для заполнения, если передавать данные в ЕРИР',
     )]
     private ?int $contractID = null;
+    private ?CampaignOuterMarkIdEnum $outerMarkID = null;
     private ?CampaignCostTypeEnum $costType = null;
     private ?string $okveds = null;
     private ?string $markingAdvertiserInfo = null;
@@ -116,41 +114,40 @@ class BaseCampaign extends AbstractAdfoxRequest
     {
         $params = parent::params();
         $params = $this->mergeParams($params, $this->assistantID, 'assistantID');
+        $params = $this->mergeParams($params, $this->kind_id?->value, 'kind_id');
+        $params = $this->mergeParams($params, $this->level, 'level');
+        $params = $this->mergeParams($params, $this->priority, 'priority');
+        $params = $this->mergeParams($params, $this->status?->value, 'status');
+        $params = $this->mergeParams($params, $this->sectorID, 'sectorID');
+        $params = $this->mergeParams($params, $this->rotationMethodID?->value, 'rotationMethodID');
+        $params = $this->mergeParams($params, $this->trafficPercents, 'trafficPercents');
         $params = $this->mergeParams($params, $this->targetingProfileID, 'targetingProfileID');
-//        $params = $this->mergeParams($params, $this->dateStart?->format(DateInterface::DATE_FORMAT), 'dateStart');
-//        $params = $this->mergeParams($params, $this->dateEnd?->format(DateInterface::DATE_FORMAT), 'dateEnd');
-//        $params = $this->mergeParams($params, $this->status?->value, 'status');
-//        $users = [];
-//        if (!is_null($this->userN)) {
-//            foreach ($this->userN as $key => $user) {
-//                $users[] = ['user' . $key => $user];
-//            }
-//        }
-//        $params = array_merge($params, ...$users);
-//        $params = array_merge($params, ...$hit_urls);
-//        $params = $this->mergeParams($params, $this->sendToErir?->value, 'sendToErir');
-//        if (!is_null($this->sendToErir) && $this->sendToErir === BannerSendToErirEnum::NOT_SEND_TO_ERIR) {
-//            $params = $this->mergeParams($params, $this->token, 'token');
-//        }
-//        $params = $this->mergeParams($params, $this->creativeContentType?->value, 'creativeContentType');
-//        $media_data_params = [];
-//        if (!is_null($this->mediaData)) {
-//            foreach ($this->mediaData as $data) {
-//                $media_data_params[] = $data->getData();
-//            }
-//        }
-//        $params = array_merge($params, ['mediaData[]' => json_encode($media_data_params)]);
-//        $send_to_erir_params = [];
-//        if (!is_null($this->sendToErirParams)) {
-//            foreach ($this->sendToErirParams as $key => $erir) {
-//                if (is_int($key)) {
-//                    $send_to_erir_params['sendToErirParameter' . $key] = $erir;
-//                } else {
-//                    $send_to_erir_params['sendToErir' . $key] = $erir;
-//                }
-//            }
-//        }
-//        $params = array_merge($params, $send_to_erir_params);
+        $params = $this->mergeParams($params, $this->sequence, 'sequence');
+        $params = $this->mergeParams($params, $this->tracingTypeID?->value, 'tracingTypeID');
+        $params = $this->mergeParams($params, $this->isSession?->value, 'isSession');
+        $params = $this->mergeParams($params, $this->isSimplifiedBanners?->value, 'isSimplifiedBanners');
+        $params = $this->mergeParams($params, $this->impressionsSmoothTypeID?->value, 'impressionsSmoothTypeID');
+        $params = $this->mergeParams($params, $this->clicksSmoothTypeID?->value, 'clicksSmoothTypeID');
+        $params = $this->mergeParams($params, $this->maxImpressions, 'maxImpressions');
+        $params = $this->mergeParams($params, $this->maxImpressionsPerDay, 'maxImpressionsPerDay');
+        $params = $this->mergeParams($params, $this->maxClicks, 'maxClicks');
+        $params = $this->mergeParams($params, $this->maxClicksPerDay, 'maxClicksPerDay');
+        $params = $this->mergeParams($params, $this->dateStart?->format(DateInterface::DATE_FORMAT), 'dateStart');
+        $params = $this->mergeParams($params, $this->dateEnd?->format(DateInterface::DATE_FORMAT), 'dateEnd');
+        $params = $this->mergeParams($params, $this->logicType?->value, 'logicType');
+        $params = $this->mergeParams($params, $this->cpm, 'cpm');
+        $params = $this->mergeParams($params, $this->sendToErir?->value, 'sendToErir');
+        $params = $this->mergeParams($params, $this->contractID, 'contractID');
+        $params = $this->mergeParams($params, $this->outerMarkID?->value, 'outerMarkID');
+        $params = $this->mergeParams($params, $this->costType?->value, 'costType');
+        $okveds = [];
+        if (!is_null($this->okveds)) {
+            foreach ($this->okveds as $okevd) {
+                $okveds[] = ['okveds[]' => $okevd];
+            }
+        }
+        $params = array_merge($params, ...$okveds);
+        $params = $this->mergeParams($params, $this->markingAdvertiserInfo, 'markingAdvertiserInfo');
 
         return $params;
     }
@@ -177,6 +174,14 @@ class BaseCampaign extends AbstractAdfoxRequest
     public function getKindId(): ?CampaignKindEnum
     {
         return $this->kind_id;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getKindIdValue(): ?int
+    {
+        return $this->kind_id?->value;
     }
 
     /**
@@ -532,6 +537,14 @@ class BaseCampaign extends AbstractAdfoxRequest
     }
 
     /**
+     * @return int|null
+     */
+    public function getSendToErirValue(): ?int
+    {
+        return $this->sendToErir?->value;
+    }
+
+    /**
      * @param CampaignSendToErirEnum|null $sendToErir
      */
     public function setSendToErir(?CampaignSendToErirEnum $sendToErir): void
@@ -553,6 +566,22 @@ class BaseCampaign extends AbstractAdfoxRequest
     public function setContractID(?int $contractID): void
     {
         $this->contractID = $contractID;
+    }
+
+    /**
+     * @return CampaignOuterMarkIdEnum|null
+     */
+    public function getOuterMarkID(): ?CampaignOuterMarkIdEnum
+    {
+        return $this->outerMarkID;
+    }
+
+    /**
+     * @param CampaignOuterMarkIdEnum|null $outerMarkID
+     */
+    public function setOuterMarkID(?CampaignOuterMarkIdEnum $outerMarkID): void
+    {
+        $this->outerMarkID = $outerMarkID;
     }
 
     /**

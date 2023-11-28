@@ -13,6 +13,7 @@ enum CampaignRotationMethodIdEnum: int
 //Параметр trafficPercents обязателен.
 //
 //Значение по умолчанию: 0.
+    case NOT_OVERRIDDEN = -1;
     case PRIORITY = 0;
     case TRAFFIC = 1;
 
