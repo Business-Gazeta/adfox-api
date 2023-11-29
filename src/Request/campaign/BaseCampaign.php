@@ -45,7 +45,7 @@ class BaseCampaign extends AbstractAdfoxRequest
     private ?CampaignStatusEnum $status = null;
     private ?int $sectorID = null;
     #[Assert\Expression(
-        "this.getTrafficPercents() !== NULL or this.rotationMethodID !== 1",
+        "this.getTrafficPercents() !== NULL or this.getRotationMethodID() !== 1",
         message: 'Процент от трафика обязателен, если используется метод ротации по % от трафика',
     )]
     private ?CampaignRotationMethodIdEnum $rotationMethodID = null;

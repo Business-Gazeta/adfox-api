@@ -15,7 +15,7 @@ class Campaign extends BaseCampaign
     private int $advertiserID;
     private ?int $superCampaignID = null;
     #[Assert\Expression(
-        "value === 0 or value === 2101 or value === 2102 or value === 1101 or (value > 100 and value < 131)",
+        "value === NULL or value === 0 or value === 2101 or value === 2102 or value === 1101 or (value > 100 and value < 131)",
         message: 'Допустимые значения: 0, 1101, 2101, 2102, 100-130',
     )]
     private ?int $impressionsMethodID = null;
