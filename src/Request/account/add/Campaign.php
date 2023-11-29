@@ -20,7 +20,7 @@ class Campaign extends BaseCampaign
     )]
     private ?int $impressionsMethodID = null;
     #[Assert\Expression(
-        "this.getCommonProfileID === NULL or (this.getBundleID() === NULL and this.getTargetingProfileID === NULL)",
+        "this.getCommonProfileID() === NULL or (this.getBundleID() === NULL and this.getTargetingProfileID() === NULL)",
         message: 'При указании общего профиля не нужно передавать профиль таргетирования и профиль размещения.',
     )]
     private ?int $commonProfileID = null;
