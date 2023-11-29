@@ -6,6 +6,7 @@ namespace BusinessGazeta\AdfoxApi\Request\campaign\placing;
 use BusinessGazeta\AdfoxApi\Enum\Campaign\CampaignActionStatusEnum;
 use BusinessGazeta\AdfoxApi\Enum\Campaign\CampaignRotationMethodIdEnum;
 use BusinessGazeta\AdfoxApi\Helper\DateInterface;
+use BusinessGazeta\AdfoxApi\Request\AbstractAdfoxRequest;
 use BusinessGazeta\AdfoxApi\Request\website\BaseWebsite;
 use DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -15,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 
 
-class Website extends BaseWebsite
+class Website extends AbstractAdfoxRequest
 {
     private int $objectID;
     private int $actionObjectID;
