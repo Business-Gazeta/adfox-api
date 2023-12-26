@@ -150,7 +150,7 @@ class BaseBanner extends AbstractAdfoxRequest
         $params = $this->mergeParams($params, $this->adLabel?->value, 'adLabel');
         $params = $this->mergeParams($params, $this->domain, 'domain');
         $params = $this->mergeParams($params, $this->sendToErir?->value, 'sendToErir');
-        if (!is_null($this->sendToErir) && $this->sendToErir === BannerSendToErirEnum::NOT_SEND_TO_ERIR) {
+        if (is_null($this->sendToErir) || $this->sendToErir !== BannerSendToErirEnum::SEND_TO_ERIR) {
             $params = $this->mergeParams($params, $this->token, 'token');
         }
         $params = $this->mergeParams($params, $this->creativeContentType?->value, 'creativeContentType');
